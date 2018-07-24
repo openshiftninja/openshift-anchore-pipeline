@@ -1,0 +1,128 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    description: Defines how to deploy the application server
+    template.alpha.openshift.io/wait-for-ready: "true"
+  creationTimestamp: 2018-07-23T16:05:38Z
+  generation: 24
+  labels:
+    app: nodejs-mongo-persistent
+    template: nodejs-mongo-persistent
+  name: nodejs-mongo-persistent
+  namespace: pipeline-demo
+  resourceVersion: "53617"
+  selfLink: /apis/apps.openshift.io/v1/namespaces/pipeline-demo/deploymentconfigs/nodejs-mongo-persistent
+  uid: 3dcf6885-8e92-11e8-9423-ee150393fa2b
+spec:
+  replicas: 1
+  selector:
+    name: nodejs-mongo-persistent
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: nodejs-mongo-persistent
+      name: nodejs-mongo-persistent
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_SERVICE_NAME
+          value: mongodb
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: nodejs-mongo-persistent
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: nodejs-mongo-persistent
+        - name: MONGODB_DATABASE
+          value: sampledb
+        - name: MONGODB_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-admin-password
+              name: nodejs-mongo-persistent
+        image: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:4e3c151b5e5f94a6de776f424d35acf36e4306bf425a26a69bbb92dd14d3b482
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /pagecount
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        name: nodejs-mongo-persistent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /pagecount
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - nodejs-mongo-persistent
+      from:
+        kind: ImageStreamTag
+        name: nodejs-mongo-persistent:latest
+        namespace: pipeline-demo
+      lastTriggeredImage: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:4e3c151b5e5f94a6de776f424d35acf36e4306bf425a26a69bbb92dd14d3b482
+    type: ImageChange
+  - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: 2018-07-24T02:05:48Z
+    lastUpdateTime: 2018-07-24T02:05:48Z
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  - lastTransitionTime: 2018-07-24T02:05:41Z
+    lastUpdateTime: 2018-07-24T02:05:49Z
+    message: replication controller "nodejs-mongo-persistent-23" successfully rolled
+      out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  details:
+    causes:
+    - type: Manual
+    message: manual change
+  latestVersion: 23
+  observedGeneration: 24
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

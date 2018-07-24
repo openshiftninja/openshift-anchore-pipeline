@@ -1,0 +1,133 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    description: Defines how to deploy the database
+    template.alpha.openshift.io/wait-for-ready: "true"
+  creationTimestamp: 2018-07-23T16:05:38Z
+  generation: 2
+  labels:
+    app: nodejs-mongo-persistent
+    template: nodejs-mongo-persistent
+  name: mongodb
+  namespace: pipeline-demo
+  resourceVersion: "2255"
+  selfLink: /apis/apps.openshift.io/v1/namespaces/pipeline-demo/deploymentconfigs/mongodb
+  uid: 3dcfdfd2-8e92-11e8-9423-ee150393fa2b
+spec:
+  replicas: 1
+  selector:
+    name: mongodb
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: mongodb
+      name: mongodb
+    spec:
+      containers:
+      - env:
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: nodejs-mongo-persistent
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: nodejs-mongo-persistent
+        - name: MONGODB_DATABASE
+          value: sampledb
+        - name: MONGODB_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-admin-password
+              name: nodejs-mongo-persistent
+        image: docker.io/centos/mongodb-32-centos7@sha256:6c6a3682b9e0e7cc2b9ef57094fe80dc2141266d5e8ec142e37009c50ae6b009
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          tcpSocket:
+            port: 27017
+          timeoutSeconds: 1
+        name: mongodb
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -i
+            - -c
+            - mongo 127.0.0.1:27017/$MONGODB_DATABASE -u $MONGODB_USER -p $MONGODB_PASSWORD
+              --eval="quit()"
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/mongodb/data
+          name: mongodb-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mongodb-data
+        persistentVolumeClaim:
+          claimName: mongodb
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - mongodb
+      from:
+        kind: ImageStreamTag
+        name: mongodb:3.2
+        namespace: openshift
+      lastTriggeredImage: docker.io/centos/mongodb-32-centos7@sha256:6c6a3682b9e0e7cc2b9ef57094fe80dc2141266d5e8ec142e37009c50ae6b009
+    type: ImageChange
+  - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: 2018-07-23T16:05:48Z
+    lastUpdateTime: 2018-07-23T16:05:48Z
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  - lastTransitionTime: 2018-07-23T16:05:49Z
+    lastUpdateTime: 2018-07-23T16:05:49Z
+    message: replication controller "mongodb-1" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
+  details:
+    causes:
+    - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

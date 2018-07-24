@@ -1,0 +1,83 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    description: Keeps track of changes in the application image
+  creationTimestamp: 2018-07-23T16:05:38Z
+  generation: 1
+  labels:
+    app: nodejs-mongo-persistent
+    template: nodejs-mongo-persistent
+  name: nodejs-mongo-persistent
+  namespace: pipeline-demo
+  resourceVersion: "53200"
+  selfLink: /apis/image.openshift.io/v1/namespaces/pipeline-demo/imagestreams/nodejs-mongo-persistent
+  uid: 3dcecb88-8e92-11e8-9423-ee150393fa2b
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent
+  tags:
+  - items:
+    - created: 2018-07-24T02:02:05Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:4e3c151b5e5f94a6de776f424d35acf36e4306bf425a26a69bbb92dd14d3b482
+      generation: 1
+      image: sha256:4e3c151b5e5f94a6de776f424d35acf36e4306bf425a26a69bbb92dd14d3b482
+    - created: 2018-07-24T01:51:42Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:ffd25a2fe249c58165c14c5bbf0004f550934bc790a1e15ad1e421fdb28e29e4
+      generation: 1
+      image: sha256:ffd25a2fe249c58165c14c5bbf0004f550934bc790a1e15ad1e421fdb28e29e4
+    - created: 2018-07-24T01:33:10Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:c8506a169287ac4674efc5060381a5da22f1ee2973fd8f577f68de48d5272de7
+      generation: 1
+      image: sha256:c8506a169287ac4674efc5060381a5da22f1ee2973fd8f577f68de48d5272de7
+    - created: 2018-07-24T01:25:44Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:7a6dbc02a60be7fe33ba3bbbe1269ab9757f9b004a26629daaa70c3bda4958aa
+      generation: 1
+      image: sha256:7a6dbc02a60be7fe33ba3bbbe1269ab9757f9b004a26629daaa70c3bda4958aa
+    - created: 2018-07-24T01:20:52Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:f5f3cd3367cf7ab2e7547cb772b91725524624b5bece0b5736f39ddab887306b
+      generation: 1
+      image: sha256:f5f3cd3367cf7ab2e7547cb772b91725524624b5bece0b5736f39ddab887306b
+    - created: 2018-07-23T19:04:14Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:9e85f93de6d0d6fdc480361e2aaaa5f986d062194239bfe5853fb4ec2e194678
+      generation: 1
+      image: sha256:9e85f93de6d0d6fdc480361e2aaaa5f986d062194239bfe5853fb4ec2e194678
+    - created: 2018-07-23T18:56:40Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:229cff842ff0df377a94f27a70fb32084133b58af7d34d069cd2207c5b49768c
+      generation: 1
+      image: sha256:229cff842ff0df377a94f27a70fb32084133b58af7d34d069cd2207c5b49768c
+    - created: 2018-07-23T18:50:20Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:ad4131e32bc599dfe655d23785da56021b11c35a794362cd77a9f6eb794a6781
+      generation: 1
+      image: sha256:ad4131e32bc599dfe655d23785da56021b11c35a794362cd77a9f6eb794a6781
+    - created: 2018-07-23T16:44:38Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:f63ac511a0bd154730bcb035c047c27b7409db37a24e15bc41b3882147ec74f1
+      generation: 1
+      image: sha256:f63ac511a0bd154730bcb035c047c27b7409db37a24e15bc41b3882147ec74f1
+    - created: 2018-07-23T16:41:26Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:00109f1682947fac8d1b0c9d9919de4e1712cab1dd06d33b7aa6eba2c25e6f65
+      generation: 1
+      image: sha256:00109f1682947fac8d1b0c9d9919de4e1712cab1dd06d33b7aa6eba2c25e6f65
+    - created: 2018-07-23T16:36:06Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:b85b99091db59831dbea8c31eb29dba296d627b505ece927c9b8e2054aaca89d
+      generation: 1
+      image: sha256:b85b99091db59831dbea8c31eb29dba296d627b505ece927c9b8e2054aaca89d
+    - created: 2018-07-23T16:27:42Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:26e52298be7c7d283029d940a6876b93d47f5baab57b0e584949a879b9917bac
+      generation: 1
+      image: sha256:26e52298be7c7d283029d940a6876b93d47f5baab57b0e584949a879b9917bac
+    - created: 2018-07-23T16:25:58Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:03c326f50979b0ed2f47e2bcf42d9712c00adc927c75d23e7a53f8a7edb8ed48
+      generation: 1
+      image: sha256:03c326f50979b0ed2f47e2bcf42d9712c00adc927c75d23e7a53f8a7edb8ed48
+    - created: 2018-07-23T16:17:21Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:8578462fe227791ac5792b139e19f8f1363dc4e6678f931d993dee46d07ec72e
+      generation: 1
+      image: sha256:8578462fe227791ac5792b139e19f8f1363dc4e6678f931d993dee46d07ec72e
+    - created: 2018-07-23T16:06:03Z
+      dockerImageReference: 172.30.1.1:5000/pipeline-demo/nodejs-mongo-persistent@sha256:d9368199b50d36072e58d92966c4b28118ba31751991516a60d53e20603318e2
+      generation: 1
+      image: sha256:d9368199b50d36072e58d92966c4b28118ba31751991516a60d53e20603318e2
+    tag: latest

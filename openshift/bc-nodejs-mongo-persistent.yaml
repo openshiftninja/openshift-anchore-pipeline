@@ -1,0 +1,51 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    description: Defines how to build the application
+    template.alpha.openshift.io/wait-for-ready: "true"
+  creationTimestamp: 2018-07-23T16:05:38Z
+  labels:
+    app: nodejs-mongo-persistent
+    template: nodejs-mongo-persistent
+  name: nodejs-mongo-persistent
+  namespace: pipeline-demo
+  resourceVersion: "53133"
+  selfLink: /apis/build.openshift.io/v1/namespaces/pipeline-demo/buildconfigs/nodejs-mongo-persistent
+  uid: 3dd3b473-8e92-11e8-9423-ee150393fa2b
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: nodejs-mongo-persistent:latest
+  postCommit:
+    script: npm test
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/openshift/nodejs-ex.git
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: NPM_MIRROR
+      from:
+        kind: ImageStreamTag
+        name: nodejs:6
+        namespace: openshift
+    type: Source
+  triggers:
+  - imageChange:
+      lastTriggeredImageID: docker.io/centos/nodejs-6-centos7@sha256:51c207f65d781db84d0fe42c2cd8744af12395e096a2c470b4ef919a4db5b9e5
+    type: ImageChange
+  - type: ConfigChange
+  - github:
+      secret: k33CIq4sFeRfrA2WAHSJAcnTP6cIf4sa2yySy04P
+    type: GitHub
+  - generic:
+      secret: MHthuo8NeamBavYFoR5dSmkOXfr8cIxV4nCkAmRV
+    type: Generic
+status:
+  lastVersion: 15

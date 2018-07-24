@@ -1,0 +1,13 @@
+node ('') {
+  stage ('buildInDevelopment') {
+    openshiftBuild(namespace: 'pipeline-demo', buildConfig: 'nodejs-mongo-persistent', showBuildLogs: 'true')
+  }
+  stage ('analyze') {
+    def imageLine = 'registry.osninja.io/pipeline-demo/nodejs-mongo-persistent:latest'
+    writeFile file: 'anchore_images', text: imageLine
+    anchore inputQueries: [[query: 'cve-scan all'], [query: 'list-packages all'], [query: 'list-files all'], [query: 'show-pkg-diffs base']], name: 'anchore_images'
+  }
+  stage ('deployInDevelopment') {
+    openshiftDeploy(namespace: 'pipeline-demo', deploymentConfig: 'nodejs-mongo-persistent')
+  }
+}

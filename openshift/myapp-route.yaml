@@ -1,0 +1,30 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: 2018-07-23T16:06:35Z
+  labels:
+    app: nodejs-mongo-persistent
+    template: nodejs-mongo-persistent
+  name: myapp-route
+  namespace: pipeline-demo
+  resourceVersion: "2376"
+  selfLink: /apis/route.openshift.io/v1/namespaces/pipeline-demo/routes/myapp-route
+  uid: 5fd0ab9a-8e92-11e8-9423-ee150393fa2b
+spec:
+  host: myapp.osninja.io
+  port:
+    targetPort: web
+  to:
+    kind: Service
+    name: nodejs-mongo-persistent
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2018-07-23T16:06:35Z
+      status: "True"
+      type: Admitted
+    host: myapp.osninja.io
+    routerName: router
+    wildcardPolicy: None
